@@ -19,12 +19,18 @@ inputs:
     required: false
   network-configuration:
     description: "The network configuration for the service. This parameter is required for task definitions that use the awsvpc network mode to receive their own elastic network interface, such as those run on Fargate."
-    required: false
+     required: false
   started-by:
     description: "The value of the task started-by"
     required: false
   wait-for-finish:
     description: "Whether to wait for tasks to reach stopped state. Will default to not waiting"
+    required: false
+  override-container:
+    description: 'The container whose command should be overridden'
+    required: false
+  override-container-command:
+    description: 'The command to to be run on the overrided container'
     required: false
   wait-for-minutes:
     description: "How long to wait for the task reach stopped state, in minutes (default: 30 minutes, max: 6 hours)."

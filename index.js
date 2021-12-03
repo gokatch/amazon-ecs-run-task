@@ -97,6 +97,8 @@ async function run() {
     const networkConfig = core.getInput('network-configuration', { required: false }) || null;
     const startedBy = core.getInput('started-by', { required: false }) || agent;
     const waitForFinish = core.getInput('wait-for-finish', { required: false }) || false;
+    const overrideContainer = core.getInput('override-container', { required: false }) || null;
+    const overrideContainerCommand = core.getMultilineInput('override-container-command', { required: false }) || [];
 
     let waitForMinutes = parseInt(core.getInput('wait-for-minutes', { required: false })) || 30;
     if (waitForMinutes > MAX_WAIT_MINUTES) {
@@ -141,6 +143,29 @@ async function run() {
 
     if (networkConfig) {
       clusterParams.networkConfiguration = JSON.parse(networkConfig);
+    }
+
+    if (overrideContainerCommand.length > 0 && !overrideContainer) {
+      throw new Error(
+        "override-container is required when override-container-command is set"
+      );
+    }
+
+    if (overrideContainer) {
+      if (overrideContainerCommand) {
+        clusterParams.overrides = {
+          containerOverrides: [
+            {
+              name: overrideContainer,
+              command: overrideContainerCommand,
+            },
+          ],
+        };
+      } else {
+        throw new Error(
+          "override-container-command is required when override-container is set"
+        );
+      }
     }
 
     core.debug(`Running task with ${JSON.stringify(clusterParams)}`)

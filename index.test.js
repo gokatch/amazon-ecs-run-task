@@ -160,7 +160,9 @@ describe("Deploy to ECS", () => {
       .mockReturnValueOnce("EC2") // launch-type
       .mockReturnValueOnce(null) // network-configuration
       .mockReturnValueOnce("amazon-ecs-run-task-for-github-actions") // started-by
-      .mockReturnValueOnce("true"); // wait-for-finish
+      .mockReturnValueOnce("true") // wait-for-finish
+      .mockReturnValueOnce(null) // override-container
+      .mockReturnValueOnce(null); // override-container-command
 
     await run();
     expect(core.setFailed).toHaveBeenCalledTimes(0);
