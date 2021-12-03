@@ -19,7 +19,7 @@ inputs:
     required: false
   network-configuration:
     description: "The network configuration for the service. This parameter is required for task definitions that use the awsvpc network mode to receive their own elastic network interface, such as those run on Fargate."
-     required: false
+    required: false
   started-by:
     description: "The value of the task started-by"
     required: false
